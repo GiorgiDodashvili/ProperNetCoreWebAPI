@@ -63,7 +63,7 @@ namespace ProperWebAPI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

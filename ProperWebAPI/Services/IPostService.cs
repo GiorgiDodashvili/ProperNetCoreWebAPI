@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace ProperWebAPI.Services
 {
-    interface IPostService
+    public interface IPostService
     {
-        List<Post> GetPosts();
+        Task<List<Post>> GetPostsAsync();
 
-        PostService GetPostById(Guid postId);
+        Task<Post> GetPostByIdAsync(Guid postId);
+
+        Task<bool> UpdatePostAsync(Post postToUpdate);
+
+        Task<bool> DeletePostAsync(Guid postId);
+
+        Task<bool> CreatePostAsync(Post postToAdd);
     }
 }

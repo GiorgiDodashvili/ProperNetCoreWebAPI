@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace ProperWebAPI.Contract.V1.Requests
 {
-    public class CreatePostRequest
+    public class UpdatePostRequest
     {
-       
-        public string Name { get; set;  }
+        public string Name { get; set; }
     }
 }

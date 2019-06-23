@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProperWebAPI.Data;
+using ProperWebAPI.Services;
+
+
 
 namespace ProperWebAPI.Installers
 {
@@ -15,11 +18,12 @@ namespace ProperWebAPI.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(
+                options.UseMySQL(
                     configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
 
                 .AddEntityFrameworkStores<DataContext>();
+            services.AddScoped<IPostService, PostService>();
         }
     }
 }
