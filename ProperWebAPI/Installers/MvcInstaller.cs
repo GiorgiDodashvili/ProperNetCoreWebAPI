@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProperWebAPI.Options;
+using ProperWebAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ProperWebAPI.Installers
@@ -21,6 +22,8 @@ namespace ProperWebAPI.Installers
             configuration.Bind(key: "JwtOptions", jwtOptions);
 
             services.AddSingleton(jwtOptions);
+
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddAuthentication(configureOptions: x =>

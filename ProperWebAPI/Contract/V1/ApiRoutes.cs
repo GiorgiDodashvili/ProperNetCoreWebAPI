@@ -18,5 +18,12 @@ namespace ProperWebAPI.Contract.V1
             public const string Update = Base + "/posts/{PostId}";
             public const string Delete = Base + "/posts/{PostId}";
         }
+
+        public static class Identity
+        {
+            public const string Login = Base + "/identity/login";
+
+            public const string Register = Base + "/identity/register";
+        }
     }
 }
