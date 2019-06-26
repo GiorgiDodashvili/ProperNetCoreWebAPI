@@ -14,8 +14,8 @@ namespace ProperWebAPI.Services
 {
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly JwtOptions jwtOptions;
+        private readonly UserManager<IdentityUser> userManager; //User manager to simplify Identity manipulation
+        private readonly JwtOptions jwtOptions; // Json Web Token Options (settings)
 
         public IdentityService(UserManager<IdentityUser> UserManager, JwtOptions JwtSettings)
         {
@@ -27,11 +27,11 @@ namespace ProperWebAPI.Services
         {
             try
             {
-                var user = await userManager.FindByEmailAsync(email: email);
+                var user = await userManager.FindByEmailAsync(email: email); // Check if user Exists
 
-                if (user == null)
+                if (user == null)  // if not
                 {
-                    return new AuthenticationResult
+                    return new AuthenticationResult  // return an error
                     {
                         Errors = new[] { "User Authentication Failed" }
 
