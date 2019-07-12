@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ProperWebAPI.Data;
 using ProperWebAPI.Services;
 
@@ -15,8 +16,9 @@ namespace ProperWebAPI.Installers
 {
     public class DBInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(IServiceCollection services, IConfiguration configuration, ILogger Logger)
         {
+            Logger.LogInformation("Started DBInstaller");
             services.AddDbContext<DataContext>(options =>
                 options.UseMySQL(
                     configuration.GetConnectionString("DefaultConnection")));

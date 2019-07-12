@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NetCoreLogger;
 
 namespace ProperWebAPI
 {
@@ -19,6 +20,18 @@ namespace ProperWebAPI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+            .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    // logging.AddFileLogger(); 
+                    logging.AddFileLogger(options =>
+                    {
+                        options.Folder = @"C:\logs\ProperWebAPI";
+                        options.MaxFileSizeInMB = 5;
+                        options.RetainPolicyFileCount = 5;
+                        options.FileName = "ProperWebAPI";
+                    });
+                });
     }
 }

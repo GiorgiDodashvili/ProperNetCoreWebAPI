@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ProperWebAPI.Data;
 using ProperWebAPI.Domain;
 
@@ -10,14 +11,17 @@ namespace ProperWebAPI.Services
 {
     public class PostService : IPostService
     {
+        private readonly ILogger Logger;
         private readonly DataContext DB;
 
-        public PostService(DataContext db)
+        public PostService(DataContext db, ILogger<PostService> logger)
         {
             DB = db;
+            Logger = logger;
         }
         public async Task<Post> GetPostByIdAsync(Guid postId)
         {
+            Logger.LogInformation($"Call to GetPostByIdAsync({postId})");
             return await DB.Posts.SingleOrDefaultAsync(s => s.Id == postId);
         }
 

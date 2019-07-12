@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using ProperWebAPI.Options;
 using ProperWebAPI.Services;
@@ -16,8 +17,9 @@ namespace ProperWebAPI.Installers
 {
     public class MvcInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(IServiceCollection services, IConfiguration configuration, ILogger logger)
         {
+            logger.LogInformation("Started MVC Installer");
             var jwtOptions = new JwtOptions();
             configuration.Bind(key: "JwtOptions", jwtOptions);
 

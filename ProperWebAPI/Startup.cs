@@ -16,11 +16,22 @@ using Microsoft.Extensions.DependencyInjection;
 using ProperWebAPI.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using ProperWebAPI.Installers;
+using Microsoft.Extensions.Logging;
+using CorrelationId;
 
 namespace ProperWebAPI
 {
     public class Startup
     {
+        private readonly ILogger _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        {
+            Configuration = configuration;
+            _logger = logger;
+        }
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +42,8 @@ namespace ProperWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.InstallServicesInAssembly(Configuration);
+            services.InstallServicesInAssembly(Configuration, _logger);
+            services.AddCorrelationId();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,13 +76,19 @@ namespace ProperWebAPI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
+            app.UseCorrelationId(new CorrelationIdOptions
+            {
+                Header = "X-Correlation-ID",
+                UseGuidForCorrelationId = true
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }
